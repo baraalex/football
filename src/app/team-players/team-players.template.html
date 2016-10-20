@@ -2,17 +2,53 @@
   <div class="row">
     <div class="col-md-2">
       <!--Sidebar content-->
-      <a class="btn btn-default" href="#!/competitions" role="button">Home</a>
-      <a class="btn btn-warning" href="#!/equipo/{{$ctrl.id}}" role="button">Back</a>
+
+      <div class="form-group form-inline">
+        <label for="search">Buscar: </label>
+        <input type="text" class="form-control" id="search" ng-model="searchText">
+      </div>
+
+      <div class="form-group form-inline">
+        <label for="select">Ordenar por: </label>
+        <select class="form-control" name="select" id="select" ng-model="order" ng-init="order = 'jerseyNumber'">
+          <option value="jerseyNumber" selected>Numero</option>
+          <option value="name">Nombre</option>
+          <option value="position">Posicion</option>
+          <option value="nationality">Nacionalidad</option>
+          <option value="marketValue">Valor</option>
+        </select>
+      </div>
+      <div>
+        <div class="checkbox">
+          <input type="checkbox" value="true" ng-model="orderDirecion" ng-init="orderDirecion = false" name="orderDirecion" id="orderDirecion">
+          <label for="orderDirecion">
+            Orden inverso
+          </label>
+        </div>
+
+      </div>
+
+
+      <div>
+        <a class="btn btn-default" href="#!/competitions" role="button">Home</a>
+        <a class="btn btn-warning" href="#!/equipo/{{$ctrl.id}}" role="button">Back</a>
+      </div>
     </div>
     <div class="col-md-10">
       <!--Body content-->
       <h1>
-        {{$ctrl.team.data.name}}
+        <div class="media">
+          <div class="media-left">
+              <img class="media-object team-image" ng-src="{{$ctrl.team.data.crestUrl}}" alt="{{$ctrl.team.data.name}}">
+          </div>
+          <div class="media-body team-name">
+            {{$ctrl.team.data.name}}
+          </div>
+        </div>
       </h1>
       <div class="row">
 
-        <div class="col-md-6" ng-repeat="player in $ctrl.players.data.players  | orderBy: 'jerseyNumber' : false">
+        <div class="col-md-6" ng-repeat="player in $ctrl.players.data.players  | orderBy: order : orderDirecion | filter:searchText">
           <div class="panel panel-primary">
             <div class="panel-heading">
               <h3 class="panel-title">{{player.name}}</h3>
