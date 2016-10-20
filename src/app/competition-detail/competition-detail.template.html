@@ -1,0 +1,53 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-2">
+      <!--Sidebar content-->
+      <a class="btn btn-default" href="#!/sw" role="button">Home</a>
+      <a class="btn btn-warning" href="#!/sw/peoples" role="button">Back</a>
+
+    </div>
+    <div class="col-md-10">
+      <!--Body content-->
+      <h1>
+        {{$ctrl.comp.data.caption}}
+      </h1>
+
+      <div class="row">
+        <dl class="col-md-6">
+          <dt>Liga</dt>
+          <dd>{{$ctrl.comp.data.league}}</dd>
+          <dt>Año</dt>
+          <dd>{{$ctrl.comp.data.year}}</dd>
+          <dt>Jornada actual</dt>
+          <dd>{{$ctrl.comp.data.currentMatchday}}</dd>
+          <dt>Jornadas</dt>
+          <dd>{{$ctrl.comp.data.numberOfMatchdays}}</dd>
+          <dt>Nº de equipos</dt>
+          <dd>{{$ctrl.comp.data.numberOfTeams}}</dd>
+          <dt>Nº de partidos</dt>
+          <dd>{{$ctrl.comp.data.numberOfGames}}</dd>
+        </dl>
+        <div class="col-md-6">
+          <ul class="list-unstyled">
+            <li>
+              <a ng-href="#!/competitions/{{$ctrl.comp.data.id}}/equipos">
+                Equipos
+              </a>
+            </li>
+            <li>
+              <a ng-href="#!/competitions/{{$ctrl.comp.data.id}}/calendario">
+                Calendario
+              </a>
+            </li>
+            <li>
+              <a ng-href="#!/competitions/{{$ctrl.comp.data.id}}/tabla">
+                Clasificación
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

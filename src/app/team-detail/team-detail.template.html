@@ -1,0 +1,49 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-2">
+      <!--Sidebar content-->
+      <a class="btn btn-default" href="#!/competitions" role="button">Home</a>
+
+    </div>
+    <div class="col-md-10">
+      <!--Body content-->
+      <h1>
+        {{$ctrl.team.data.name}}
+      </h1>
+
+      <div class="row">
+        <dl class="col-md-6">
+          <dt>Escudo</dt>
+          <dd>
+            <div class="media">
+              <div class="media-left">
+                <img class="media-object team-image" ng-src="{{$ctrl.team.data.crestUrl}}" alt="{{team.name}}">
+              </div>
+            </div>
+          </dd>
+          <dt>Valor de la plantilla</dt>
+          <dd>{{$ctrl.team.data.squadMarketValue}}</dd>
+          <dt>Codigo</dt>
+          <dd>{{$ctrl.team.data.code}}</dd>
+          <dt>Nombre corto</dt>
+          <dd>{{$ctrl.team.data.shortName}}</dd>
+        </dl>
+        <div class="col-md-6">
+          <ul class="list-unstyled">
+            <li>
+              <a ng-href="#!/equipo/{{$ctrl.id}}/jugadores">
+                Jugadores
+              </a>
+            </li>
+            <li>
+              <a ng-href="#!/equipo/{{$ctrl.id}}/calendario">
+                Calendario
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,70 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-2">
+      <!--Sidebar content-->
+
+      <label>Search: <input ng-model="searchText"></label>
+
+      <a class="btn btn-default" href="#!/competitions" role="button">Home</a>
+      <a class="btn btn-warning" href="#!/teams/{{$ctrl.id}}" role="button">Back</a>
+
+
+    </div>
+
+    <div class="col-md-10" ng-if="$ctrl.dates.status != 200">
+      <div class="alert alert-danger" role="alert">{{$ctrl.dates.data.error}}</div>
+    </div>
+
+    <div class="col-md-10" ng-if="$ctrl.dates.status == 200">
+      <!--Body content-->
+
+      <h1>
+        {{$ctrl.team.data.name}}
+      </h1>
+
+      <ul class="results-grid">
+        <li ng-repeat="date in $ctrl.dates.data.fixtures | filter:searchText">
+          <div class="panel" ng-class="{ 'panel-info': date.status == 'FINISHED', 'panel-warning': date.status == 'IN_PLAY', 'panel-success': date.status !== 'FINISHED' && date.status !== 'IN_PLAY'  }">
+
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                <a href="#!/equipo/{{date._links.homeTeam.href.replace('http://api.football-data.org/v1/teams/','')}}">
+                  {{date.homeTeamName}}
+                </a> VS
+                <a href="#!/equipo/{{date._links.awayTeam.href.replace('http://api.football-data.org/v1/teams/','')}}">
+                  {{date.awayTeamName}}
+                </a>
+              </h3>
+            </div>
+            <div class="panel-body">
+              <p>
+                <a href="#!/competitions/{{$ctrl.getCompetition(date._links.competition.href.replace('http://api.football-data.org/v1/competitions/','')).id}}">{{$ctrl.getCompetition(date._links.competition.href.replace('http://api.football-data.org/v1/competitions/','')).caption}}</a>
+              </p>
+              <p>
+                Jornada: {{date.matchday}}
+              </p>
+              <p>
+                {{date.date | date:"MM/dd/yyyy 'a las' h:mma"}}
+              </p>
+              <div ng-if="date.status == 'FINISHED' || date.status == 'IN_PLAY'">
+                <p ng-if="date.status == 'FINISHED'">
+                  Resultado en los 90 min: {{date.result.goalsHomeTeam}} - {{date.result.goalsAwayTeam}}
+                </p>
+                <p ng-if="date.status == 'IN_PLAY'">
+                  Resultado: {{date.result.goalsHomeTeam}} - {{date.result.goalsAwayTeam}}
+                </p>
+                <p ng-if="date.result.extraTime">
+                  En la prorroga: {{date.result.extraTime.goalsHomeTeam}} - {{date.result.extraTime.goalsAwayTeam}}
+                </p>
+                <p ng-if="date.result.penaltyShootout">
+                  Tanda de penaltys: {{date.result.penaltyShootout.goalsHomeTeam}} - {{date.result.penaltyShootout.goalsAwayTeam}}
+                </p>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+</div>

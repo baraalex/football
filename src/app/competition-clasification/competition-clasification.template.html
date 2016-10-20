@@ -1,0 +1,397 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-2">
+      <!--Sidebar content-->
+
+      <a class="btn btn-default" href="#!/competitions" role="button">Home</a>
+      <a class="btn btn-warning" href="#!/competitions/{{$ctrl.id}}" role="button">Back</a>
+
+
+    </div>
+
+    <div class="col-md-10" ng-if="$ctrl.clasif.status != 200">
+      <div class="alert alert-danger" role="alert">{{$ctrl.clasif.data.error}}</div>
+    </div>
+
+    <div class="col-md-10" ng-if="$ctrl.clasif.status == 200">
+      <!--Body content-->
+
+      <h1>
+        {{$ctrl.clasif.data.leagueCaption}}
+      </h1>
+
+      <div class="row" ng-if="$ctrl.clasif.data.standings" ng-init="$ctrl.sortType = 'rank'">
+        <div class="col-md-4" ng-repeat="(key, value) in $ctrl.clasif.data.standings">
+          <h2>Grupo {{key}}</h2>
+          <div class="table-responsive">
+            <table class="table table-striped table-hover table-condensed">
+              <thead class="text-center">
+                <tr>
+                  <td ng-click="sortType = 'rank'; sortReverse = !sortReverse">
+                    <a href="">
+                      Pos
+                      <span ng-show="sortType == 'rank' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                      <span ng-show="sortType == 'rank' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+                    </a>
+                  </td>
+                  <td class="text-left" ng-click="sortType = 'team'; sortReverse = !sortReverse">
+                    <a href="">
+                      Equipo
+                      <span ng-show="sortType == 'team' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                      <span ng-show="sortType == 'team' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+                    </a>
+                  </td>
+                  <td ng-click="sortType = 'playedGames'; sortReverse = !sortReverse">
+                    <a href="">
+                      PJ
+                      <span ng-show="sortType == 'playedGames' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                      <span ng-show="sortType == 'playedGames' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+                    </a>
+                  </td>
+                  <td ng-click="sortType = 'goals'; sortReverse = !sortReverse">
+                    <a href="">
+                      GF
+                      <span ng-show="sortType == 'goals' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                      <span ng-show="sortType == 'goals' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+                    </a>
+                  </td>
+                  <td ng-click="sortType = 'goalsAgainst'; sortReverse = !sortReverse">
+                    <a href="">
+                      GC
+                      <span ng-show="sortType == 'goalsAgainst' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                      <span ng-show="sortType == 'goalsAgainst' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+                    </a>
+                  </td>
+                  <td ng-click="sortType = 'goalDifference'; sortReverse = !sortReverse">
+                    <a href="">
+                      DG
+                      <span ng-show="sortType == 'goalDifference' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                      <span ng-show="sortType == 'goalDifference' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+                    </a>
+                  </td>
+                  <td ng-click="sortType = 'points'; sortReverse = !sortReverse">
+                    <a href="">
+                      Puntos
+                      <span ng-show="sortType == 'points' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                      <span ng-show="sortType == 'points' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+                    </a>
+                  </td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="text-center" ng-repeat="team in value | orderBy:sortType:sortReverse | filter:searchFish">
+                  <td>
+                    {{team.rank}}
+                  </td>
+                  <td class="text-left">
+                    <a href="#!/equipo/{{team.teamId}}">
+                      {{team.team}}
+                    </a>
+                  </td>
+                  <td>
+                    {{team.playedGames}}
+                  </td>
+                  <td>
+                    {{team.goals}}
+                  </td>
+                  <td>
+                    {{team.goalsAgainst}}
+                  </td>
+                  <td>
+                    {{team.goalDifference}}
+                  </td>
+                  <td>
+                    {{team.points}}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+
+
+          </div>
+        </div>
+
+        <dl class="dl-horizontal col-md-4">
+          <dt>Pos</dt>
+          <dd>Posicion</dd>
+          <dt>PJ</dt>
+          <dd>Partidos jugados</dd>
+          <dt>GF</dt>
+          <dd>Goles a favor</dd>
+          <dt>GC</dt>
+          <dd>Goles en contra</dd>
+          <dt>DG</dt>
+          <dd>Diferencia de goles</dd>
+        </dl>
+      </div>
+
+      <div class="table-responsive" ng-if="$ctrl.clasif.data.standing" ng-init="$ctrl.sortType = 'position'">
+
+        <table class="table table-striped table-hover table-condensed">
+          <thead class="text-center">
+            <tr>
+              <td ng-click="sortType = 'position'; sortReverse = !sortReverse">
+                <a href="">
+                  Pos
+                  <span ng-show="sortType == 'position' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                  <span ng-show="sortType == 'position' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+                </a>
+              </td>
+              <td class="text-left" ng-click="sortType = 'teamName'; sortReverse = !sortReverse">
+                <a href="">
+                  Equipo
+                  <span ng-show="sortType == 'teamName' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                  <span ng-show="sortType == 'teamName' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+                </a>
+              </td>
+              <td ng-click="sortType = 'playedGames'; sortReverse = !sortReverse">
+                <a href="">
+                  PJ
+                  <span ng-show="sortType == 'playedGames' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                  <span ng-show="sortType == 'playedGames' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+                </a>
+              </td>
+              <td ng-click="sortType = 'wins'; sortReverse = !sortReverse">
+                <a href="">
+                  PG
+                  <span ng-show="sortType == 'wins' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                  <span ng-show="sortType == 'wins' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+                </a>
+              </td>
+              <td ng-click="sortType = 'draws'; sortReverse = !sortReverse">
+                <a href="">
+                  PE
+                  <span ng-show="sortType == 'draws' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                  <span ng-show="sortType == 'draws' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+                </a>
+              </td>
+              <td ng-click="sortType = 'losses'; sortReverse = !sortReverse">
+                <a href="">
+                  PP
+                  <span ng-show="sortType == 'losses' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                  <span ng-show="sortType == 'losses' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+                </a>
+              </td>
+              <td ng-click="sortType = 'goals'; sortReverse = !sortReverse">
+                <a href="">
+                  GF
+                  <span ng-show="sortType == 'goals' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                  <span ng-show="sortType == 'goals' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+                </a>
+              </td>
+              <td ng-click="sortType = 'goalsAgainst'; sortReverse = !sortReverse">
+                <a href="">
+                  GC
+                  <span ng-show="sortType == 'goalsAgainst' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                  <span ng-show="sortType == 'goalsAgainst' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+                </a>
+              </td>
+              <td ng-click="sortType = 'goalDifference'; sortReverse = !sortReverse">
+                <a href="">
+                  DG
+                  <span ng-show="sortType == 'goalDifference' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                  <span ng-show="sortType == 'goalDifference' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+                </a>
+              </td>
+              <td ng-click="sortType = 'home.wins'; sortReverse = !sortReverse">
+                <a href="">
+                  PGC
+                  <span ng-show="sortType == 'home.wins' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                  <span ng-show="sortType == 'home.wins' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+                </a>
+              </td>
+              <td ng-click="sortType = 'home.draws'; sortReverse = !sortReverse">
+                <a href="">
+                PEC
+                <span ng-show="sortType == 'home.draws' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                <span ng-show="sortType == 'home.draws' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+                </a>
+              </td>
+              <td ng-click="sortType = 'home.losses'; sortReverse = !sortReverse">
+                <a href="">
+                  PPC
+                  <span ng-show="sortType == 'home.losses' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                  <span ng-show="sortType == 'home.losses' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+                </a>
+              </td>
+              <td ng-click="sortType = 'home.goals'; sortReverse = !sortReverse">
+                <a href="">
+                  GFC
+                  <span ng-show="sortType == 'home.goals' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                  <span ng-show="sortType == 'home.goals' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+                </a>
+              </td>
+              <td ng-click="sortType = 'home.goalsAgainst'; sortReverse = !sortReverse">
+                <a href="">
+                  GCC
+                  <span ng-show="sortType == 'home.goalsAgainst' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                  <span ng-show="sortType == 'home.goalsAgainst' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+                </a>
+              </td>
+              <td ng-click="sortType = 'away.wins'; sortReverse = !sortReverse">
+                <a href="">
+                  PGF
+                  <span ng-show="sortType == 'away.wins' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                  <span ng-show="sortType == 'away.wins' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+                </a>
+              </td>
+              <td ng-click="sortType = 'away.draws'; sortReverse = !sortReverse">
+                <a href="">
+                  PEF
+                  <span ng-show="sortType == 'away.draws' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                  <span ng-show="sortType == 'away.draws' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+                </a>
+              </td>
+              <td ng-click="sortType = 'away.losses'; sortReverse = !sortReverse">
+                <a href="">
+                  PPF
+                  <span ng-show="sortType == 'away.losses' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                  <span ng-show="sortType == 'away.losses' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+                </a>
+              </td>
+              <td ng-click="sortType = 'away.goals'; sortReverse = !sortReverse">
+                <a href="">
+                  GFF
+                  <span ng-show="sortType == 'away.goals' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                  <span ng-show="sortType == 'away.goals' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+                </a>
+              </td>
+              <td ng-click="sortType = 'away.goalsAgainst'; sortReverse = !sortReverse">
+                <a href="">
+                  GCF
+                  <span ng-show="sortType == 'away.goalsAgainst' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                  <span ng-show="sortType == 'away.goalsAgainst' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+                </a>
+              </td>
+
+              <td ng-click="sortType = 'points'; sortReverse = !sortReverse">
+                <a href="">
+                  Puntos
+                  <span ng-show="sortType == 'points' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                  <span ng-show="sortType == 'points' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+                </a>
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="team in $ctrl.clasif.data.standing | orderBy:sortType:sortReverse | filter:searchFish" class="text-center">
+              <td>
+                {{team.position}}
+              </td>
+              <td class="text-left">
+                <a href="#!/equipo/{{team._links.team.href.replace('http://api.football-data.org/v1/teams/','')}}">
+                  {{team.teamName}}
+                </a>
+              </td>
+              <td>
+                {{team.playedGames}}
+              </td>
+              <td>
+                {{team.wins}}
+              </td>
+              <td>
+                {{team.draws}}
+              </td>
+              <td>
+                {{team.losses}}
+              </td>
+              <td>
+                {{team.goals}}
+              </td>
+              <td>
+                {{team.goalsAgainst}}
+              </td>
+              <td>
+                {{team.goalDifference}}
+              </td>
+              <td>
+                {{team.home.wins}}
+              </td>
+              <td>
+                {{team.home.draws}}
+              </td>
+              <td>
+                {{team.home.losses}}
+              </td>
+              <td>
+                {{team.home.goals}}
+              </td>
+              <td>
+                {{team.home.goalsAgainst}}
+              </td>
+              <td>
+                {{team.away.wins}}
+              </td>
+              <td>
+                {{team.away.draws}}
+              </td>
+              <td>
+                {{team.away.losses}}
+              </td>
+              <td>
+                {{team.away.goals}}
+              </td>
+              <td>
+                {{team.away.goalsAgainst}}
+              </td>
+
+              <td>
+                {{team.points}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div>
+          <dl class="dl-horizontal col-md-4">
+            <dt>Pos</dt>
+            <dd>Posicion</dd>
+            <dt>PJ</dt>
+            <dd>Partidos jugados</dd>
+            <dt>PG</dt>
+            <dd>Partidos ganados</dd>
+            <dt>PE</dt>
+            <dd>Partidos empatados</dd>
+            <dt>PP</dt>
+            <dd>Partidos perdidos</dd>
+            <dt>GF</dt>
+            <dd>Goles a favor</dd>
+          </dl>
+          <dl class="dl-horizontal col-md-4">
+
+            <dt>GC</dt>
+            <dd>Goles en contra</dd>
+            <dt>DG</dt>
+            <dd>Diferencia de goles</dd>
+            <dt>PGC</dt>
+            <dd>Partidos ganados en casa</dd>
+            <dt>PEC</dt>
+            <dd>Partidos empatados en casa</dd>
+            <dt>PPC</dt>
+            <dd>Partidos perdidos en casa</dd>
+            <dt>GFC</dt>
+            <dd>Goles a favor en casa</dd>
+          </dl>
+          <dl class="dl-horizontal col-md-4">
+            <dt>GCC</dt>
+            <dd>Goles en contra en casa</dd>
+            <dt>PGF</dt>
+            <dd>Partidos ganados fuera</dd>
+            <dt>PEF</dt>
+            <dd>Partidos empatados fuera</dd>
+            <dt>PPF</dt>
+            <dd>Partidos perdidos fuera</dd>
+            <dt>GFF</dt>
+            <dd>Goles a favor fuera</dd>
+            <dt>GCF</dt>
+            <dd>Goles en contra fuera</dd>
+          </dl>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>

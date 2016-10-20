@@ -1,0 +1,18 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-2">
+      <!--Sidebar content-->
+      <label>Search: <input ng-model="searchText"></label>
+
+    </div>
+    <div class="col-md-10">
+      <!--Body content-->
+      <ul class="list-unstyled">
+        <li ng-repeat="competition in $ctrl.comp.data | orderBy: 'caption' : false | filter:searchText">
+          <a href="#!/competitions/{{competition.id}}">{{competition.caption}}</a>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+</div>
