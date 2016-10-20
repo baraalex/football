@@ -3,10 +3,15 @@
     <div class="col-md-2">
       <!--Sidebar content-->
 
-      <label>Search: <input ng-model="searchText"></label>
+      <div class="form-group form-inline">
+        <label for="search">Buscar: </label>
+        <input type="text" class="form-control" id="search" ng-model="searchText">
+      </div>
 
-      <a class="btn btn-default" href="#!/competitions" role="button">Home</a>
-      <a class="btn btn-warning" href="#!/teams/{{$ctrl.id}}" role="button">Back</a>
+      <div>
+        <a class="btn btn-default" href="#!/competitions" role="button">Home</a>
+        <a class="btn btn-warning" href="#!/teams/{{$ctrl.id}}" role="button">Back</a>
+      </div>
 
 
     </div>
@@ -23,7 +28,7 @@
       </h1>
 
       <ul class="results-grid">
-        <li ng-repeat="date in $ctrl.dates.data.fixtures | filter:searchText">
+        <li ng-repeat="date in $ctrl.dates.data.fixtures   | orderBy: 'date' : false | filter:searchText">
           <div class="panel" ng-class="{ 'panel-info': date.status == 'FINISHED', 'panel-warning': date.status == 'IN_PLAY', 'panel-success': date.status !== 'FINISHED' && date.status !== 'IN_PLAY'  }">
 
             <div class="panel-heading">

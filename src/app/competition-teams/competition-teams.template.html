@@ -3,10 +3,16 @@
     <div class="col-md-2">
       <!--Sidebar content-->
 
-      <label>Search: <input ng-model="searchText"></label>
+      <div class="form-group form-inline">
+        <label for="search">Buscar: </label>
+        <input type="text" class="form-control" id="search" ng-model="searchText">
+      </div>
 
-      <a class="btn btn-default" href="#!/competitions" role="button">Home</a>
-      <a class="btn btn-warning" href="#!/competitions/{{$ctrl.id}}" role="button">Back</a>
+      <div>
+        <a class="btn btn-default" href="#!/competitions" role="button">Home</a>
+        <a class="btn btn-warning" href="#!/competitions/{{$ctrl.id}}" role="button">Back</a>
+      </div>
+
 
 
     </div>
