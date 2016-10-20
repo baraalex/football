@@ -1,0 +1,38 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-2">
+      <!--Sidebar content-->
+
+      <label>Search: <input ng-model="searchText"></label>
+
+      <a class="btn btn-default" href="#!/competitions" role="button">Home</a>
+      <a class="btn btn-warning" href="#!/competitions/{{$ctrl.id}}" role="button">Back</a>
+
+
+    </div>
+    <div class="col-md-10">
+      <!--Body content-->
+
+      <ul class="team-list">
+        <li ng-repeat="team in $ctrl.comp.data.teams | orderBy: 'name' : false | filter:searchText">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <div class="media">
+                <div class="media-left">
+                  <a href="#!/equipo/{{team._links.self.href.replace('http://api.football-data.org/v1/teams/','')}}">
+                    <img class="media-object team-image" ng-src="{{team.crestUrl}}" alt="{{team.name}}">
+                  </a>
+                </div>
+                <div class="media-body team-name">
+                  <a href="#!/equipo/{{team._links.self.href.replace('http://api.football-data.org/v1/teams/','')}}" class="media-heading">{{team.name}}</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+
+      </ul>
+
+    </div>
+  </div>
+</div>
